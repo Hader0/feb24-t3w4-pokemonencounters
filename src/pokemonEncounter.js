@@ -6,8 +6,6 @@ function renderPokemonData(pokemonData) {
         return;
     }
 
-    pokemonRenderArea.innerText = pokemonData.name;
-
     let pokemonContainerDiv = document.createElement("div");
     pokemonContainerDiv.classList += "pokemonCardEntry";
 
@@ -56,12 +54,10 @@ function getRandomPokemonId() {
 async function getPokemon() {
     console.log("Getting Pokemon now!");
 
-    // HArdcoded for development, replace "pikachu" with a random number
+    // Hardcoded for development, replace "pikachu" with a random number
     // Random number is ID from 1 to 1025
     let apiResponse = await fetch("https://pokeapi.co/api/v2/pokemon/" + getRandomPokemonId());
     let apiData = await apiResponse.json();
-
-    let pokemonName = apiData.name;
 
     // Name, Tyes, Image, Sound
     return {
@@ -69,13 +65,14 @@ async function getPokemon() {
         types: apiData.types,
         image: apiData.sprites.other.home.front_default,
         sound: apiData.cries.latest
-    };
+    }
 }
 
 let encounterButton = document.getElementById("pokemonEncounterButton");
 // encounterButton.addEventListener("click", getPokemon);
 
 encounterButton.addEventListener("click",  async (event) => {
+	pokemonRenderArea.innerText = "";
     console.log("Some block of code in the event listener");
     let pokemonResult = await getPokemon();
     console.log(pokemonResult);
@@ -87,16 +84,18 @@ let encounterGroupButton = document.getElementById("pokemonGroupEncounter");
 
 encounterGroupButton.addEventListener("click", async () => {
 
-		let multiplePokemonResult = await Promise.all([
-			getPokemon(),
-			getPokemon(),
-			getPokemon(),
-			getPokemon(),
-			getPokemon(),
-			getPokemon(),
-		]);
+    pokemonRenderArea.innerText = "";
 
-		console.log(multiplePokemonResult);
+    let multiplePokemonResult = await Promise.all([
+        getPokemon(),
+        getPokemon(),
+        getPokemon(),
+        getPokemon(),
+        getPokemon(),
+        getPokemon(),
+    ]);
 
-		multiplePokemonResult.forEach(renderPokemonData);
+    console.log(multiplePokemonResult);
+
+    multiplePokemonResult.forEach(renderPokemonData);
 });
