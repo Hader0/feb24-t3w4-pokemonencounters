@@ -81,4 +81,22 @@ encounterButton.addEventListener("click",  async (event) => {
     console.log(pokemonResult);
 
     renderPokemonData(pokemonResult);
-})
+});
+
+let encounterGroupButton = document.getElementById("pokemonGroupEncounter");
+
+encounterGroupButton.addEventListener("click", async () => {
+
+		let multiplePokemonResult = await Promise.all([
+			getPokemon(),
+			getPokemon(),
+			getPokemon(),
+			getPokemon(),
+			getPokemon(),
+			getPokemon(),
+		]);
+
+		console.log(multiplePokemonResult);
+
+		multiplePokemonResult.forEach(renderPokemonData);
+});
